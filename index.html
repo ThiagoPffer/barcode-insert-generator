@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode generator</title>
+
+  <style>
+    button {
+      width: 200px; 
+      margin-top: 15px; 
+      height: 25px;
+    }
+
+    #loading-bar {
+      display: none;
+      flex-direction: row;
+      width: 200px;
+      height: 25px;
+      background-color: transparent;
+      border: 1px solid black;
+      margin: 20px 0;
+    }
+
+    #loading-bar #loading-bar-status {
+      background-color: green;
+      height: 100%;
+    }
+
+    #barcodes {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #barcodes > li {
+      margin: 20px 0 ;
+    }
+  </style>
+</head>
+<body>
+  <div style="display: flex; flex-direction: column; gap: 10px; width: 500px; user-select: none;">
+    <div>
+      <label for="quantidade">Quantidade</label>
+      <input id="quantidade" type="number">
+    </div>
+    <div>
+      <label for="banco">Banco</label>
+      <input id="banco" maxlength="3" type="text">
+    </div>
+    <div>
+      <label for="data">Data</label>
+      <input id="data" type="date">
+    </div>
+    <div>
+      <label for="valor">Valor</label>
+      <input id="valor" type="number">
+      <input id="check-valor" type="checkbox" onchange="toggleCheck(checked)">
+      <label for="check-valor">Gerar aleatório</label>
+    </div>
+    <button id="generate-btn">Gerar</button>
+  </div>
+  <div id="loading-bar">
+    <div id="loading-bar-status"></div>
+  </div>
+  <ol id="barcodes"></ol>
+  <h3 id="error" style="color: red"></h3>
+  <script src="/index.js"></script>
+</body>
+</html>
