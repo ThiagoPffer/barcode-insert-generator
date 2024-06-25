@@ -1,24 +1,23 @@
 const BASE_DATE = new Date('1997-10-07');
 
 onmessage = (e) => {
-  const data = e.data;
-  const date = parseInt((new Date(data[1]) - BASE_DATE) / (1000 * 60 * 60 * 24), 10)
-  const value = data[2] ? String(data[2]) : getRandomBcValue()
-
+  let { bank, date, value, amount, index } = e.data;
+  const parsedDate = parseInt((new Date(date) - BASE_DATE) / (1000 * 60 * 60 * 24), 10);
+  value = value || getRandomBcValue();
+ 
   postMessage({
     bcData: {
-      barcode: getNewBarcode(data[0], date, value), 
-      bank: data[0], 
-      duedate: data[1], 
+      barcode: getNewBarcode(bank, parsedDate, value), 
+      bank: bank, 
+      duedate: date, 
       value: Number(value.substring(0, 8)+"."+value.substring(8, 10)), 
-      index: data[3]+1
+      index: index + 1
     }, 
-    percentage: getPercentage(data[3]+1, data[4])
+    percentage: getPercentage(index + 1, amount)
   });
 };
 
 const getNewBarcode = (banco, date, value) => {
-  // 341 229740 0000065090 6216579879878151615623232
   let barcode = banco;
   barcode += Math.floor(Math.random()*(100-10)+10);
   barcode += String(date);

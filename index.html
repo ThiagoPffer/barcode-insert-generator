@@ -34,35 +34,145 @@
     #barcodes > li {
       margin: 20px 0 ;
     }
-  </style>
+
+    .row {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .section {
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+      width: 500px; 
+      user-select: none;
+    }
+
+</style>
 </head>
 <body>
-  <div style="display: flex; flex-direction: column; gap: 10px; width: 500px; user-select: none;">
-    <div>
-      <label for="quantidade">Quantidade</label>
-      <input id="quantidade" type="number">
+  <div class="row">
+    <div class="section">
+      <h3>Geral</h3>
+      <div>
+        <label for="quantidade">Quantidade</label>
+        <input id="quantidade" type="number">
+      </div>
+      <div>
+        <label for="tenant">Tenant</label>
+        <select name="tenant" id="tenant">
+          <option value="financas">financas</option>
+          <option value="financas2">financas2</option>
+          <option value="financas4">financas4</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="log_importacao_id">ID do log de importação</label>
+        <input id="log_importacao_id" type="number">
+      </div>
+      <div>
+        <label for="nome_arquivo">Nome do arquivo</label>
+        <input id="nome_arquivo" type="text">
+      </div>
     </div>
-    <div>
-      <label for="banco">Banco</label>
-      <input id="banco" maxlength="3" type="text">
+    <div class="section">
+      <h3>Movimento</h3>
+
+      <div>
+        <label for="tipo_movimento">Tipo do movimento</label>
+        <select name="tipo_movimento" id="tipo_movimento">
+          <option value="1">1 - Entrada de títulos</option>
+          <option value="2">2 - Pedido de baixa</option>
+          <option value="6">6 - Alteração de vencimento</option>
+          <option value="9">9 - Protestar</option>
+          <option value="31">31 - Alteração de outros dados</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="banco">Banco</label>
+        <select name="banco" id="banco">
+          <option value="001">001 - Banco do Brasil</option>
+          <option value="033">033 - Banco Santander</option>
+          <option value="104">104 - Caixa Econômica Federal</option>
+          <option value="237">237 - Banco Bradesco S.A.</option>
+          <option value="341">341 - Banco Itaú S.A.</option>
+          <option value="356">356 - Banco Real S.A. (antigo)</option>
+          <option value="389">389 - Banco Mercantil do Brasil S.A.</option>
+          <option value="399">399 - HSBC Bank Brasil S.A. - Banco Múltiplo</option>
+          <option value="422">422 - Banco Safra S.A.</option>
+          <option value="453">453 - Banco Rural S.A.</option>
+          <option value="633">633 - Banco Rendimento S.A.</option>
+          <option value="652">652 - Itaú Unibanco Holding S.A.</option>
+          <option value="745">745 - Banco Citibank S.A.</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="data">Data de vencimento</label>
+        <input id="data" type="date">
+      </div>
+      
+      <div>
+        <label for="valor">Valor</label>
+        <input id="valor" type="number">
+        <input id="check-valor" type="checkbox" onchange="toggleCheck(checked)">
+        <label for="check-valor">Gerar aleatório</label>
+      </div>
     </div>
-    <div>
-      <label for="data">Data</label>
-      <input id="data" type="date">
+    <div class="section">
+      <h3>Fornecedor</h3>
+
+      <div>
+        <label for="nome_fornecedor">Nome do fornecedor</label>
+        <input id="nome_fornecedor" type="text">
+      </div>
+  
+      <div>
+        <label for="cpf_cnpj_fornecedor">CPF/CNPJ do fornecedor</label>
+        <input id="cpf_cnpj_fornecedor" type="number">
+      </div>
+  
+      <div>
+        <label for="tipo_inscricao_fornecedor">Tipo de inscrição do fornecedor</label>
+        <select name="tipo_inscricao_fornecedor" id="tipo_inscricao_fornecedor">
+          <option value="2">2 - Pessoa jurídica</option>
+          <option value="1">1 - Pessoa física</option>
+        </select>
+      </div>
     </div>
-    <div>
-      <label for="valor">Valor</label>
-      <input id="valor" type="number">
-      <input id="check-valor" type="checkbox" onchange="toggleCheck(checked)">
-      <label for="check-valor">Gerar aleatório</label>
+    <div class="section">
+      <h3>Filial</h3>
+
+      <div>
+        <label for="tipo_inscricao_filial">Tipo de inscrição da filial</label>
+        <select name="tipo_inscricao_filial" id="tipo_inscricao_filial">
+          <option value="2">2 - Pessoa jurídica</option>
+          <option value="1">1 - Pessoa física</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="cpf_cnpj_filial">CPF/CNPJ da filial</label>
+        <input id="cpf_cnpj_filial" type="number">
+      </div>
+
+      <div>
+        <label for="id_filial">ID da filial</label>
+        <input id="id_filial" type="number">
+      </div>
     </div>
+  </div>
+  <div class="row" style="gap: 16px;">
     <button id="generate-btn">Gerar</button>
+    <button id="copy-btn" style="display: none;">Copiar registros</button>
   </div>
   <div id="loading-bar">
     <div id="loading-bar-status"></div>
   </div>
   <ol id="barcodes"></ol>
   <h3 id="error" style="color: red"></h3>
-  <script src="/index.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>
