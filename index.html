@@ -27,12 +27,17 @@
       height: 100%;
     }
 
-    #barcodes {
+    #barcode-list,
+    #log-importacao-insert {
       font-family: 'Courier New', Courier, monospace;
     }
 
-    #barcodes > li {
+    #barcode-list > li {
       margin: 20px 0 ;
+    }
+
+    #log-importacao {
+      display: none;
     }
 
     .row {
@@ -166,12 +171,19 @@
   </div>
   <div class="row" style="gap: 16px;">
     <button id="generate-btn">Gerar</button>
-    <button id="copy-btn" style="display: none;">Copiar registros</button>
   </div>
   <div id="loading-bar">
     <div id="loading-bar-status"></div>
   </div>
-  <ol id="barcodes"></ol>
+  <div id="log-importacao">
+    <h3>Log de importação</h3>
+    <div id="log-importacao-insert"></div>
+  </div>
+  <div id="barcodes" style="display: none;">
+    <h3>Registros:</h3>
+    <button id="copy-btn" style="display: none;">Copiar registros</button>
+    <ol id="barcode-list"></ol>
+  </div>
   <h3 id="error" style="color: red"></h3>
   <script src="./index.js"></script>
 </body>

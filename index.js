@@ -19,6 +19,9 @@ const IPT_ID_FILIAL = document.getElementById('id_filial');
 
 const H_ERROR = document.getElementById('error');
 const DIV_BARCODES = document.getElementById('barcodes');
+const OL_BARCODES = document.getElementById('barcode-list');
+const DIV_LOG_IMPORTACAO = document.getElementById('log-importacao');
+const DIV_LOG_IMPORTACAO_INSERT = document.getElementById('log-importacao-insert');
 const DIV_LOADING_BAR = document.getElementById('loading-bar');
 const DIV_LOADING_BAR_STATUS = document.getElementById('loading-bar-status');
 const BTN_GENERATE = document.getElementById('generate-btn');
@@ -54,18 +57,20 @@ if (window.Worker) {
 
     DIV_LOADING_BAR_STATUS.setAttribute('style', `width: ${percentage}%`);
     let li = `<li>${getInsert({ ...bcData, docId })}</li>`;
-    DIV_BARCODES.innerHTML += li;
+    OL_BARCODES.innerHTML += li;
 
     if (percentage >= 100) {
+      setLogImportacao();
       DIV_LOADING_BAR.setAttribute('style', `display: none;`);
       DIV_LOADING_BAR_STATUS.setAttribute('style', `width: 0%`);
       BTN_COPY.setAttribute('style', 'display: block;');
+      DIV_BARCODES.setAttribute('style', 'display: block;');
     }
   }
 }
 
 BTN_COPY.addEventListener('click', () => {
-  const barcodes = DIV_BARCODES.innerText;
+  const barcodes = OL_BARCODES.innerText;
   navigator.clipboard.writeText(barcodes);
   alert(`${IPT_QUANTIDADE.value} registros copiados para a área de transferência`);
 });
@@ -97,7 +102,21 @@ const verifyFilledFields = () => {
 
 const resetErrorAndLoading = () => {
   H_ERROR.innerText = '';
-  DIV_BARCODES.innerHTML = '';
+  OL_BARCODES.innerHTML = '';
+  DIV_BARCODES.setAttribute('style', 'display: none;');
+  
+  DIV_LOG_IMPORTACAO.removeAttribute('style');
+  DIV_LOG_IMPORTACAO.setAttribute('style', 'display: none;');
+}
+
+const setLogImportacao = () => {
+  DIV_LOG_IMPORTACAO.removeAttribute('style');
+  DIV_LOG_IMPORTACAO.setAttribute('style', 'display: block;');
+  DIV_LOG_IMPORTACAO_INSERT.innerHTML = getInsertLogImportacao();
+}
+
+const getInsertLogImportacao = () => {
+  return `INSERT INTO erp_fin_${IPT_TENANT.value}.log_importacao (id, nome_arquivo, status, data_geracao, usuario_geracao, servico) VALUES(${IPT_LOG_IMPORTACAO_ID.value}, '${IPT_NOME_ARQUIVO.value}.RET', 1, '${new Date().toISOString().split('T')[0]} 12:00:00.000', 'admin@${IPT_TENANT.value}.com.br', 'dda_debitodiretoautorizado');`;
 }
 
 const getNewDocId = () => {
